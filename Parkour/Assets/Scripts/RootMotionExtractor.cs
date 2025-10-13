@@ -3,8 +3,10 @@ using UnityEngine;
 public class RootMotionExtractor : MonoBehaviour
 {
     private Animator animator;
+
     public Vector3 extractedRootMotion;
-    public Vector3 motion;
+    public Vector3 motionForController;
+    public Vector3 motionForRigidbody;
 
     void Awake()
     {
@@ -13,19 +15,21 @@ public class RootMotionExtractor : MonoBehaviour
 
     void OnAnimatorMove()
     {
-        // Extract root motion from the Animator
         extractedRootMotion = animator.deltaPosition;
         Debug.Log("Raw Root Motion: " + animator.deltaPosition);
 
-        // Process it: remove vertical drift and align with forward direction
         Vector3 horizontalMotion = extractedRootMotion;
         horizontalMotion.y = 0f;
-        motion = transform.forward * horizontalMotion.magnitude;
+
+        // Split motion for CharacterController and Rigidbody
+        motionForController = transform.forward * horizontalMotion.magnitude;
+        motionForRigidbody = horizontalMotion; // raw horizontal motion for physics
     }
 
     public void ClearMotion()
     {
         extractedRootMotion = Vector3.zero;
-        motion = Vector3.zero;
+        motionForController = Vector3.zero;
+        motionForRigidbody = Vector3.zero;
     }
 }

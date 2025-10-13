@@ -3,3 +3,5 @@ ReadMe.
 Move script is for controlling the joystick to effectively move player. hasnt been done yet
 Player input effectively gets the input from the ui available making them referencable
 Rotate camera and player gets the input touchfield from player input script, using them to rotate the player on the x axis and the camera on the y axis
+charController script use the char controller to move while grounded.
+Groundmanager checks if its grounded and effectively switches between charcontrol and rbcontrol.
