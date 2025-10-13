@@ -23,10 +23,14 @@ public class AnimationController : MonoBehaviour
             anim.SetTrigger("Jump");
         }
 
-        if (rootBone != null)
+      /*  if (rootBone != null)
         {
             lockedRootPosition = new Vector3(0, rootBone.localPosition.y, 0);
             rootBone.localPosition = lockedRootPosition;
         }
+        */
+       
     }
+
+
 }
