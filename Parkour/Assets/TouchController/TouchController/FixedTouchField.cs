@@ -11,27 +11,30 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [HideInInspector]
     public Vector2 PointerOld;
     [HideInInspector]
+    protected int PointerId;
+    [HideInInspector]
     public bool Pressed;
-
-    private PointerEventData currentEventData;
 
     void Update()
     {
         if (Pressed)
         {
-            Vector2 currentPosition = Vector2.zero;
-
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+            if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0)
             {
-                currentPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                var touch = Touchscreen.current.touches[0];
+                if (touch.press.isPressed)
+                {
+                    Vector2 currentPos = touch.position.ReadValue();
+                    TouchDist = currentPos - PointerOld;
+                    PointerOld = currentPos;
+                }
             }
             else if (Mouse.current != null)
             {
-                currentPosition = Mouse.current.position.ReadValue();
+                Vector2 currentPos = Mouse.current.position.ReadValue();
+                TouchDist = currentPos - PointerOld;
+                PointerOld = currentPos;
             }
-
-            TouchDist = currentPosition - PointerOld;
-            PointerOld = currentPosition;
         }
         else
         {
@@ -42,7 +45,7 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerDown(PointerEventData eventData)
     {
         Pressed = true;
-        currentEventData = eventData;
+        PointerId = eventData.pointerId;
         PointerOld = eventData.position;
     }
 

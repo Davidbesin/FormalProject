@@ -6,6 +6,7 @@ public class CharController : MonoBehaviour
     public Animator animator;
     public CharacterController characterController;
     private Vector3 rootMotionDelta;
+   // [SerializeField] RigidBody rb;
 
     private GroundManager groundManager;
 
@@ -25,19 +26,15 @@ public class CharController : MonoBehaviour
 
     void Update()
     {
-        // Check if grounded using GroundManager's public fields
-        if (!groundManager.isGrounded)
-        {
-            enabled = false;
-            return;
-        }
+        animator.applyRootMotion = false; // Check if grounded using GroundManager's public fields
+        
 
         // Apply root motion manually
         if (rootMotionDelta.magnitude > 0.001f)
         {
             characterController.Move(rootMotionDelta);
         }
-
+        
         // Clamp to ground if grounded
         ClampToGround();
     }

@@ -6,6 +6,8 @@ public class AnimationController : MonoBehaviour
     public Animator anim;
     private Transform rootBone;
     [SerializeField] private Vector3 lockedRootPosition;
+    [SerializeField] private AnimationControl control;
+     [SerializeField] private GroundManager gm;
 
     void Start()
     {
@@ -16,21 +18,23 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        if (input.jump)
+   void Update()
+   {
+        if (input.jumpButtonPressed && (gm.isGrounded || gm.isGrounded1 || gm.isGrounded2))
         {
-            anim.SetTrigger("Jump");
+            control.TriggerJump();
+            input.jumpButtonPressed = false; // Consume the input
+            Debug.Log("Jumping");
         }
-
-      /*  if (rootBone != null)
+        else if (gm.isGrounded || gm.isGrounded1 || gm.isGrounded2)
+        {
+            control.TriggerRun();
+        }
+   }      /*  if (rootBone != null)
         {
             lockedRootPosition = new Vector3(0, rootBone.localPosition.y, 0);
             rootBone.localPosition = lockedRootPosition;
         }
         */
-       
-    }
-
 
 }

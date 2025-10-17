@@ -6,31 +6,26 @@ public class GroundManager : MonoBehaviour
     public bool isGrounded;
     public bool isGrounded1;
     public bool isGrounded2;
+
     [SerializeField] public Transform groundCheck1;
     [SerializeField] public Transform groundCheck2;
+
     public float groundDistance = 0.2f;
     public LayerMask groundMask;
-    public CharController charController;
 
-    void Awake()
+    void FixedUpdate()
     {
-        charController = GetComponent<CharController>();
+        // Check ground at both points
+        isGrounded1 = Physics.CheckSphere(groundCheck1.position, groundDistance, groundMask);
+        isGrounded2 = Physics.CheckSphere(groundCheck2.position, groundDistance, groundMask);
+
+        // Combine into a single grounded flag
+        isGrounded = isGrounded1 || isGrounded2;
     }
 
-void FixedUpdate()
-{
-    isGrounded1 = Physics.CheckSphere(groundCheck1.position, groundDistance, groundMask);
-    isGrounded2 = Physics.CheckSphere(groundCheck2.position, groundDistance, groundMask);
-    isGrounded = isGrounded1 || isGrounded2;
-
-    // Enable or disable CharController based on grounding
-    if (charController != null)
-    {
-        charController.enabled = isGrounded;
-    }
-}
-
-
+    /// <summary>
+    /// Attempts to get the Y position of the ground directly below the object.
+    /// </summary>
     public bool TryGetGroundY(out float groundY)
     {
         RaycastHit hit;

@@ -13,13 +13,13 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector] public bool back;
     [HideInInspector] public float touchLeftRight;
     [HideInInspector] public float touchUpDown;
-    [HideInInspector] public bool jump;
     [HideInInspector] public float leftRight;
     [HideInInspector] public float frontBack;
     [HideInInspector] public bool slower;
     [HideInInspector] public bool faster;
 
-    private bool jumpButtonPressed;
+    //[HideInInspector]
+    public bool jumpButtonPressed;
 
     void FixedUpdate()
     {
@@ -38,20 +38,15 @@ public class PlayerInput : MonoBehaviour
         slower = range == Joystick.InputRange.Lesser;
         faster = range == Joystick.InputRange.Greater;
 
-        // Trigger jump once
-        if (jumpButtonPressed)
-        {
-            jump = true;
-            jumpButtonPressed = false; // Reset immediately after setting jump
-        }
-        else
-        {
-            jump = false;
-        }
+        
     }
 
-    public void JumpButton()
+    public void JumpButtondown()
     {
         jumpButtonPressed = true;
+    }
+    public void JumpButtonup()
+    {
+        jumpButtonPressed = false;
     }
 }
