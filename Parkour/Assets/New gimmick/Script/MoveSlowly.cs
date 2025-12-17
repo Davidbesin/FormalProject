@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class MoveSlowly : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Tooltip("How fast the world moves toward the player")]
+    public float scrollSpeed = 10f;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // Move the entire environment backward (Negative Z)
+        // transform.forward represents the world's forward direction
+        transform.Translate(-Vector3.forward * scrollSpeed * Time.deltaTime);
     }
 }
