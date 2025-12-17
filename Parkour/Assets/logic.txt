@@ -1,0 +1,4 @@
+idle is for when grounded.
+run is when grounded. u can jump and continue running. 
+fall is when not grounded, rigidbody is active. roll will be the ending. everything must be overidden by fall if not grounded anf above height treshold. everything. 
+roll is only after a fall.
