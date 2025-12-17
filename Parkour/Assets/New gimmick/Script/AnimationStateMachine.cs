@@ -10,6 +10,7 @@ public class AnimationStateMachine : MonoBehaviour
     public float elapsed;
     public Animator playerAnim;
     public FixedTouchField touchField;
+    private float microVib = 0.001f;
 
     // Gravity settings
     public float gravity = -9.81f;
@@ -104,6 +105,10 @@ public class AnimationStateMachine : MonoBehaviour
             playerCC.radius = 0.32f;
             playerCC.center = new Vector3(0, 0.78f, 0); 
 
+            // Flip the vibration so you don't actually drift away
+            microVib = -microVib; 
+
+            // Reset move vector
             charMove = Vector3.zero;
 
             if (playerCC.isGrounded && verticalVelocity < 0)
@@ -111,9 +116,17 @@ public class AnimationStateMachine : MonoBehaviour
             else
                 verticalVelocity += gravity * Time.deltaTime;
 
+            // Apply gravity to Y
             charMove.y = verticalVelocity * Time.deltaTime;
+    
+            // THE FIX: Add the vibration to X or Z so the Move() function 
+            // actually checks for obstacles hitting your head/front
+            charMove.x = microVib; 
+            charMove.z = microVib;
+
             playerCC.Move(charMove);
         }
+
 
         // Jump state
         else if (state.IsName("Jump"))
