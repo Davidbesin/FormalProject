@@ -1,0 +1,151 @@
+**Confirming format details**
+
+Alright, I need to make sure the headings are in sentence case, which is kind of a small but important thing. Also, horizontal dividers are needed for separation; I can make sure these are simple and tidy. Alright, let’s proceed with this setup!
+# Multiplayer endless runner master plan
+
+This is a concise, copy‑paste blueprint you can implement step by step. It uses a temporary lobby, free STUN, a player host, interactive gameplay, and basic anti‑cheat without paid relays.
+
+---
+
+## System components
+
+- **Lobby/signaling server:** Node.js + WebSocket; tracks players, rooms, and forwards ICE offers/candidates.
+- **Unity clients:** Capture inputs, simulate locally, predict and reconcile states from the host.
+- **Session host:** One client becomes authoritative for physics, collisions, ownership, and event validation.
+- **Connectivity helpers:** Multiple free STUN servers; UPnP/NAT‑PMP attempts; optional TCP fallback; optional lightweight peer relay for control only.
+
+---
+
+## End‑to‑end flow
+
+1. **Join lobby:** Client connects via WSS, receives a playerID and short‑lived session token.
+2. **Create/join room:** Lobby stores members; gathers RTT/packet‑loss stats for host election.
+3. **Host election:** Lobby picks a provisional host using lowest RTT, ICE success, and UPnP status; announces hostID.
+4. **Signaling:** Peers exchange SDP/ICE over WebSocket; try host, server‑reflexive (STUN), peer‑reflexive, then TCP.
+5. **Session start:** Lobby sends a session manifest (hostID, peer list, session token keys) and detaches.
+6. **Gameplay:** Peers send inputs to host; host simulates and broadcasts authoritative state deltas; clients predict and reconcile.
+7. **Host migration:** On host timeout/crash/cheat flag, elect next best; apply latest signed checkpoint; continue session.
+8. **Results:** Host signs final standings; peers verify and return to lobby.
+
+---
+
+## Data and packet schema
+
+- **Identity/security:**
+  - **Token:** Short‑lived JWT from lobby attached to every packet.
+  - **Integrity:** Per‑packet HMAC; include seqID + timestamp + nonce; drop invalid/replayed packets.
+
+- **Input (client → host):**
+  - **Fields:** playerID, seqID, timestamp, inputMask (jump/slide/left/right), analogMove, clientTick.
+  - **Rate:** 20–30 Hz; keep under ~100 bytes.
+
+- **State delta (host → clients):**
+  - **Fields:** seqID, serverTick, per‑player pos(x,y), vel(x,y), stateFlags (stun, invuln), interaction events within vicinity, object ownership updates.
+  - **Rate:** 15–20 Hz; aim ~200–600 bytes based on player count.
+
+- **Event (bidirectional):**
+  - **Fields:** eventType (pickup/trap/collide/push), actors, eventID, commitHash, revealPayload (when available).
+  - **Rate:** On demand; host validates spatial/temporal windows.
+
+- **Checkpoint (host → all):**
+  - **Fields:** serverTick, minimal world snapshot, per‑player stats, prevCheckpointHash → currentHash (hash‑chain), hostSignature.
+  - **Rate:** Every 1–2 seconds for migration/audits.
+
+---
+
+## Gameplay networking model
+
+- **Client prediction:**
+  - **Local:** Apply inputs instantly; animate at 60 FPS.
+  - **Reconciliation:** When authoritative state arrives, smoothly correct over ~100–200 ms to avoid pops.
+
+- **Host authority:**
+  - **Collisions:** Host computes pushes, overlaps, trap triggers; clients send intents, not final positions.
+  - **Shared objects:** Host owns spawn/despawn and lock/ownership; clients mirror.
+
+- **Fairness handling:**
+  - **Interpolation/extrapolation:** Interpolate remote players; extrapolate <150 ms on packet delay.
+  - **Soft resolution:** Cap impulses to reduce desync pain; apply latency‑tolerant hit windows.
+
+---
+
+## Anti‑cheat and security
+
+- **Validation rules:**
+  - **Movement caps:** Max speed/acceleration; reject teleports beyond threshold.
+  - **Action limits:** Cooldowns, stamina budgets, server‑side timers; ignore spam.
+  - **Proximity checks:** Require spatial/timing windows for pickups and collisions.
+
+- **Cryptographic hygiene:**
+  - **Transport:** DTLS/TLS for encrypted channels.
+  - **Message integrity:** HMAC across all packets; rotate keys per session.
+  - **Commit–reveal:** Hash(action + nonce + tick) then reveal payload; prevents last‑second edits.
+
+- **Detection and response:**
+  - **Anomaly score:** Track impossible actions; auto‑kick above threshold.
+  - **Audit trail:** Hash‑chained checkpoints; peers can verify host output.
+  - **Host migration:** Trigger on host anomalies/timeouts.
+
+---
+
+## Connectivity tactics without paid relay
+
+- **STUN and ICE:**
+  - **Multiple STUN URLs:** Provide at least 2–3 free STUN servers.
+  - **Candidate order:** Host → server‑reflexive → peer‑reflexive → TCP fallback.
+
+- **Router helpers:**
+  - **UPnP/NAT‑PMP:** Host attempts port mapping; show success/failure to user.
+
+- **Last resorts:**
+  - **Light peer relay:** Temporarily forward control messages through a connected peer; cap bandwidth/time.
+  - **User assist:** Optional port‑forward guide for volunteers; off by default.
+
+---
+
+## Performance targets
+
+- **Tick rates:**
+  - **Render:** 60 FPS.
+  - **Net input:** 20–30 Hz.
+  - **State broadcast:** 15–20 Hz (adaptive downshift on load).
+
+- **Bandwidth:**
+  - **Per client:** Keep under a few hundred kbps.
+  - **Packet sizes:** Inputs ~50–100 bytes; deltas ~200–600 bytes.
+
+- **Monitoring:**
+  - **Metrics:** RTT, packet loss, ICE path used, UPnP result, anomaly counts.
+  - **Logs:** Session start/end, host changes, disconnections.
+
+---
+
+## Implementation roadmap (copy‑ready)
+
+1. **Prototype lobby:**
+   - **Goal:** WebSocket server; register players; list rooms; forward signaling messages.
+   - **Deliverables:** playerID issuance, JWT tokens, room create/join, ICE messaging.
+
+2. **P2P connect + host election:**
+   - **Goal:** Exchange SDP/ICE; connect via STUN; elect first‑join or lowest RTT as host.
+   - **Deliverables:** connectivity status UI, metrics collection, host announcement.
+
+3. **Baseline gameplay sync:**
+   - **Goal:** Inputs to host; host state deltas back; client prediction + reconciliation.
+   - **Deliverables:** smooth movement, basic collisions, shared object ownership.
+
+4. **Security and integrity:**
+   - **Goal:** DTLS/TLS, per‑packet HMAC, sequence/timestamp/nonce; commit–reveal for critical events.
+   - **Deliverables:** drop tampered/replayed packets; verifiable events.
+
+5. **Resilience and migration:**
+   - **Goal:** Signed checkpoints every 1–2 s; automatic host migration on failure/anomaly.
+   - **Deliverables:** checkpoint apply flow; seamless session continuity.
+
+6. **Polish and diagnostics:**
+   - **Goal:** Adaptive tick rates, bandwidth caps, in‑game diagnostics HUD (RTT, loss, NAT status).
+   - **Deliverables:** stable performance across varied networks; clearer user feedback.
+
+---
+
+If you want, I can tailor these packet fields and tick rates to your target platform (PC/mobile) and player count, or draft the exact message formats you’ll implement next.
