@@ -523,6 +523,18 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &751851269743976869
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d702bbe672c7d9543aaca9b5f7b472a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationReset
 --- !u!1101 &1112396326639823563
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -783,7 +795,7 @@ AnimatorStateMachine:
     m_Position: {x: -1030, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8176211362362856702}
-    m_Position: {x: 100, y: -430, z: 0}
+    m_Position: {x: 100, y: -420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -642669520635476657}
     m_Position: {x: 910, y: -490, z: 0}
@@ -886,13 +898,14 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Jump
-  m_Speed: 0.6
+  m_Speed: 0.54
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6312534152319618248}
   - {fileID: -8140412181248895447}
   - {fileID: 489176674473909455}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 751851269743976869}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

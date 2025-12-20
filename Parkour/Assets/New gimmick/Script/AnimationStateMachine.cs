@@ -2,113 +2,120 @@
 
 public class AnimationStateMachine : MonoBehaviour
 {
-    // Components
     private CharacterController playerCC;
-    private Vector3 charMove; 
+    private Animator playerAnim;
     private AnimatorStateInfo state;
-    public float duration = 1f;
+
+    private Vector3 charMove;
+    private float duration = 1f;
     public float elapsed;
-    public Animator playerAnim;
-    public FixedTouchField touchField;
     private float microVib = 0.001f;
 
-    // Gravity settings
     public float gravity = -9.81f;
     private float verticalVelocity;
 
-    // flags
-    private bool swipeUp;
-    private bool swipeDown;
-    private bool swipeLeft;
-    public bool swipeRight; 
+    public FixedTouchField touchField;
 
-    // ENUM
-    public enum Lane{
-        left,
-        middle,
-        right  
-    }
-
+    public enum Lane { left, middle, right }
     public Lane currentLane = Lane.middle;
 
     [Header("Jump Curves")]
-    public AnimationCurve jumpYCurve;       // relative Y offset
-
+    public AnimationCurve jumpYCurve;
     [Header("Short Roll Curves")]
-    public AnimationCurve shortRollYCurve;  // relative Y offset
-
+    public AnimationCurve shortRollYCurve;
     [Header("ChangeLaneLeft")]
-    public AnimationCurve goLeftCurve;      // relative left distance
-
+    public AnimationCurve goLeftCurve;
     [Header("ChangeLaneRight")]
-    public AnimationCurve goRightCurve;     // relative right distance
-    
+    public AnimationCurve goRightCurve;
+
+    private bool stumble;
 
     void Start()
     {
         playerCC = GetComponent<CharacterController>();
+        playerAnim = GetComponent<Animator>();
+
+        // ✅ Subscribe to swipe events
+        touchField.OnSwipeUp += HandleSwipeUp;
+        touchField.OnSwipeDown += HandleSwipeDown;
+        touchField.OnSwipeLeft += HandleSwipeLeft;
+        touchField.OnSwipeRight += HandleSwipeRight;
     }
 
-    void Update()
-    { 
-        // Swipe detection
-        if (touchField.Pressed)
+    // -------------------
+    // Swipe Handlers
+    // -------------------
+    private void HandleSwipeUp()
+    {
+        if (playerCC.isGrounded) Jump();
+    }
+
+    private void HandleSwipeDown()
+    {
+        Roll();
+    }
+
+    private void HandleSwipeLeft()
+    {
+        if (currentLane > Lane.left)
         {
-            Vector2 swipe = touchField.TouchDist;
-
-            if (swipe.magnitude > 50f)
-            {
-                if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
-                {
-                    if (swipe.x > 0)
-                    {
-                        if (currentLane < Lane.right) swipeRight = true;
-                        else swipeRight = false;
-
-                        swipeUp = false; swipeLeft = false; swipeDown = false;
-                    }
-                    else
-                    {
-                        if (currentLane > Lane.left) swipeLeft = true;
-                        else swipeLeft = false;
-                        swipeUp = false; swipeRight = false; swipeDown = false;
-                    }  
-                }
-                else
-                {
-                    if (swipe.y > 0)
-                    {
-                        swipeRight = false; swipeUp = true; swipeLeft = false; swipeDown = false;
-                    }
-                    else
-                    {
-                        swipeRight = false; swipeUp = false; swipeLeft = false; swipeDown = true;
-                    }
-                }
-
-                touchField.TouchDist = Vector2.zero;
-            }
+            GoLeft();
+            currentLane--;
         }
+    }
 
-        // Trigger actions
-        if (swipeUp && !touchField.Pressed && playerCC.isGrounded){Jump();}
-        else if (swipeDown  && !touchField.Pressed){Roll();}
-        else if (swipeLeft && !touchField.Pressed && currentLane > Lane.left){GoLeft(); currentLane--;}
-        else if (swipeRight && !touchField.Pressed && currentLane < Lane.right){GoRight(); currentLane++;}
+    private void HandleSwipeRight()
+    {
+        if (currentLane < Lane.right)
+        {
+            GoRight();
+            currentLane++;
+        }
+    }
 
+    // -------------------
+    // Actions
+    // -------------------
+    public void Jump()
+    {
+        playerAnim.SetTrigger("jump");
+        elapsed = 0f;
+    }
+
+    public void Roll()
+    {
+        playerAnim.SetTrigger("roll");
+        elapsed = 0f;
+    }
+
+    public void GoLeft()
+    {
+        playerAnim.SetTrigger("Left");
+        elapsed = 0f;
+    }
+
+    public void GoRight()
+    {
+        playerAnim.SetTrigger("Right");
+        elapsed = 0f;
+    }
+
+    // -------------------
+    // Physics & Animation
+    // -------------------
+    void LateUpdate()
+    {
+        // ✅ Still need LateUpdate for physics & animation state progression
         state = playerAnim.GetCurrentAnimatorStateInfo(0);
 
-        // Run state (no forward motion)
-        if (state.IsName("Run")) 
+        // Run state
+        if (state.IsName("Run"))
         {
             playerCC.height = 1.85f;
             playerCC.radius = 0.32f;
-            playerCC.center = new Vector3(0, 0.78f, 0); 
+            playerCC.center = new Vector3(0, 0.78f, 0);
 
-            // Flip the vibration so you don't actually drift away
-            microVib = -microVib; 
-
-            // Reset move vector
+            microVib = -microVib;
             charMove = Vector3.zero;
 
             if (playerCC.isGrounded && verticalVelocity < 0)
@@ -116,33 +123,27 @@ public class AnimationStateMachine : MonoBehaviour
             else
                 verticalVelocity += gravity * Time.deltaTime;
 
-            // Apply gravity to Y
             charMove.y = verticalVelocity * Time.deltaTime;
-    
-            // THE FIX: Add the vibration to X or Z so the Move() function 
-            // actually checks for obstacles hitting your head/front
-            charMove.x = microVib; 
+            charMove.x = microVib;
             charMove.z = microVib;
 
             playerCC.Move(charMove);
         }
 
-
         // Jump state
         else if (state.IsName("Jump"))
-        {            
+        {
             playerCC.height = 0.81f;
             playerCC.radius = 0.47f;
             playerCC.center = new Vector3(0, 0.33f, 0.21f);
 
             elapsed += Time.deltaTime;
-            duration = 0.6f;
+            duration = 0.7f;
             float t = Mathf.Clamp01(elapsed / duration);
 
             float yDelta = jumpYCurve.Evaluate(t) - jumpYCurve.Evaluate(t - (Time.deltaTime / duration));
-
             Vector3 delta = Vector3.up * yDelta;
-            playerCC.Move(delta);   
+            playerCC.Move(delta);
         }
 
         // Lane left
@@ -150,33 +151,31 @@ public class AnimationStateMachine : MonoBehaviour
         {
             playerCC.height = 1.85f;
             playerCC.radius = 0.33f;
-            playerCC.center = new Vector3(0, 0.78f, 0); 
+            playerCC.center = new Vector3(0, 0.78f, 0);
 
             elapsed += Time.deltaTime;
-            duration = 1f;
+            duration = 0.33f;
             float t = Mathf.Clamp01(elapsed / duration);
 
             float rightDelta = goLeftCurve.Evaluate(t) - goLeftCurve.Evaluate(t - (Time.deltaTime / duration));
-
             Vector3 delta = transform.right * -rightDelta;
-            playerCC.Move(delta);   
+            playerCC.Move(delta);
         }
-        
+
         // Lane right
         else if (state.IsName("Right"))
         {
             playerCC.height = 1.85f;
             playerCC.radius = 0.33f;
-            playerCC.center = new Vector3(0, 0.78f, 0); 
+            playerCC.center = new Vector3(0, 0.78f, 0);
 
             elapsed += Time.deltaTime;
             duration = 0.33f;
             float t = Mathf.Clamp01(elapsed / duration);
 
             float rightDelta = goRightCurve.Evaluate(t) - goRightCurve.Evaluate(t - (Time.deltaTime / duration));
-
             Vector3 delta = transform.right * rightDelta;
-            playerCC.Move(delta);   
+            playerCC.Move(delta);
         }
 
         // Roll state
@@ -187,7 +186,6 @@ public class AnimationStateMachine : MonoBehaviour
             playerCC.center = new Vector3(0, 0.33f, 0.21f);
 
             Vector3 delta = Vector3.zero;
-
             delta.y = verticalVelocity;
             playerCC.Move(delta);
         }
@@ -197,29 +195,16 @@ public class AnimationStateMachine : MonoBehaviour
             verticalVelocity += gravity * Time.deltaTime;
             charMove.y = verticalVelocity * Time.deltaTime;
         }
-    }   
-    
-    // Swipe methods
-    public void Jump(){playerAnim.SetTrigger("jump"); swipeUp = false;}
-    public void Roll(){playerAnim.SetTrigger("roll"); swipeDown = false;}
-    public void GoLeft(){playerAnim.SetTrigger("Left"); swipeLeft = false;}
-    public void GoRight(){playerAnim.SetTrigger("Right"); swipeRight = false;} 
+    }
 
-    private bool stumble; // check if it once in a short time
-
+    // -------------------
+    // Collision
+    // -------------------
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.CompareTag ("Obstacle"))
+        if (hit.collider.CompareTag("Obstacle"))
         {
-            if (!stumble)
-            {
-                playerAnim.SetTrigger("Stumble");
-            }
-
-            else 
-            {
-                 playerAnim.SetTrigger("Stumble");
-            }
+            playerAnim.SetTrigger("Stumble");
         }
     }
 }

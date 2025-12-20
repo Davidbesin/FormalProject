@@ -12,6 +12,7 @@ EditorBuildSettings:
     path: Assets/New gimmick/vaulting.unity
     guid: 33c92d50000f44542a11bd951e9cb5dd
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: e79d1dff8e8174649ac77b35ee200edb, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: c330286906dd6ee4cb71b08450d6f2da, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7239f4e2d3dc16643888f01d32725f2a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

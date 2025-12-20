@@ -1,56 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using System;
 
 public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [HideInInspector]
-    public Vector2 TouchDist;
-    [HideInInspector]
-    public Vector2 PointerOld;
-    [HideInInspector]
-    protected int PointerId;
-    [HideInInspector]
-    public bool Pressed;
+    // Events fire once per swipe, like button presses
+    public event Action OnSwipeUp;
+    public event Action OnSwipeDown;
+    public event Action OnSwipeLeft;
+    public event Action OnSwipeRight;
 
-    void Update()
-    {
-        if (Pressed)
-        {
-            if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0)
-            {
-                var touch = Touchscreen.current.touches[0];
-                if (touch.press.isPressed)
-                {
-                    Vector2 currentPos = touch.position.ReadValue();
-                    TouchDist = currentPos - PointerOld;
-                    PointerOld = currentPos;
-                }
-            }
-            else if (Mouse.current != null)
-            {
-                Vector2 currentPos = Mouse.current.position.ReadValue();
-                TouchDist = currentPos - PointerOld;
-                PointerOld = currentPos;
-            }
-        }
-        else
-        {
-            TouchDist = Vector2.zero;
-        }
-    }
+    private Vector2 startPos;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Pressed = true;
-        PointerId = eventData.pointerId;
-        PointerOld = eventData.position;
+        startPos = eventData.position;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Pressed = false;
+        Vector2 delta = eventData.position - startPos;
+
+        // Decide direction once, like pressing a D-pad button
+        if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+        {
+            if (delta.x > 0) OnSwipeRight?.Invoke();
+            else OnSwipeLeft?.Invoke();
+        }
+        else
+        {
+            if (delta.y > 0) OnSwipeUp?.Invoke();
+            else OnSwipeDown?.Invoke();
+        }
     }
 }
