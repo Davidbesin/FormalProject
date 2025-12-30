@@ -20,6 +20,7 @@ public class InputStateMachine : MonoBehaviour
     
     public enum Lane { left, middle, right }
     public Lane currentLane = Lane.middle;
+    private Lane previousLane = Lane.middle;
     public phase currentPhase;
 
     [Header("Jump Settings")]
@@ -54,13 +55,18 @@ public class InputStateMachine : MonoBehaviour
         // 2. Highest Authority: Determine State
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
+            // Store the lane before we change it
+            Lane targetLane = currentLane;
+
             if (direction.x > 0 && currentLane < Lane.right)
             {
+                previousLane = currentLane; // Save current as previous
                 currentLane++;
-                playerAnim.SetTrigger("Right"); // Instant override
+                playerAnim.SetTrigger("Right");
             }
             else if (direction.x < 0 && currentLane > Lane.left)
             {
+                previousLane = currentLane; // Save current as previous
                 currentLane--;
                 playerAnim.SetTrigger("Left");
             }
@@ -113,7 +119,14 @@ public class InputStateMachine : MonoBehaviour
         ApplyLaneMovement();
 
         playerCC.Move(move);
-
+        
+        CollisionFlags flags = playerCC.Move(move);
+        
+        // If we hit something on the sides while changing lanes, go back
+        if ((flags & CollisionFlags.Sides) != 0)
+        {
+            currentLane = previousLane;
+        }
     }
     
     
@@ -133,11 +146,10 @@ public class InputStateMachine : MonoBehaviour
     }
 
 
-Vector3 move = Vector3.zero;
-Vector3 delta;
-float t;
-float rightDelta;
-public bool jump;
+    Vector3 move = Vector3.zero;
+    Vector3 delta;
+    float t;
+    float rightDelta;
 
     private void ApplyStatePhysics()
     {

@@ -1422,10 +1422,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9e13ddf92dfcab14abf216280252615f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1037468077}
+      addedObject: {fileID: 1037468076}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9e13ddf92dfcab14abf216280252615f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1037468076}
+      addedObject: {fileID: 1037468080}
   m_SourcePrefab: {fileID: 100100000, guid: 9e13ddf92dfcab14abf216280252615f, type: 3}
 --- !u!1 &990849616
 GameObject:
@@ -1560,7 +1560,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.96, z: 0}
---- !u!114 &1037468077
+--- !u!114 &1037468080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1573,40 +1573,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputStateMachine
   currentState: 4
-  haltElapsedOneFrame: 0
+  haltElapsedOneFrame: 1
   elapsed: 0
   currentLane: 1
   currentPhase: 0
+  jumpCount: 0
+  maxJumps: 2
+  laneWidth: 2
+  laneSmoothTime: 0.12
   jumpYCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0013157882
-      value: 0.007523643
-      inSlope: 9.872575
-      outSlope: 9.872575
+      time: -0.0026315765
+      value: 0.0028544532
+      inSlope: 10.5240135
+      outSlope: 10.5240135
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0.052631546
+      inWeight: 0.33333334
+      outWeight: 0.06669776
     - serializedVersion: 3
-      time: 0.5026245
-      value: 1.9885559
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: 0.50237334
+      value: 2.0076065
+      inSlope: -0.04804647
+      outSlope: -0.04804647
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0013157
-      value: -0.004757301
-      inSlope: -9.217466
-      outSlope: -9.217466
+      time: 0.99450684
+      value: 0.006660367
+      inSlope: -10.485651
+      outSlope: -10.485651
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.0631579
-      outWeight: 0
+      inWeight: 0.042614885
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1615,7 +1619,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: -0.0065789474
-      value: -0.0009514602
+      value: 0.012369201
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1623,8 +1627,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2
-      value: 2
+      time: 0.9718043
+      value: 2.016155
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1638,8 +1642,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0039473646
-      value: 0.0009515328
+      time: -0.0065789474
+      value: 0.006660367
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1647,8 +1651,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2
-      value: 2
+      time: 0.976452
+      value: 1.98046
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1658,6 +1662,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &1037468082 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9e13ddf92dfcab14abf216280252615f, type: 3}
+  m_PrefabInstance: {fileID: 861164824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1055429194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2233,6 +2242,7 @@ GameObject:
   - component: {fileID: 1294224465}
   - component: {fileID: 1294224468}
   - component: {fileID: 1294224469}
+  - component: {fileID: 1294224470}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2418,6 +2428,22 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1294224470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294224464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3027d7c211148ca4aaceed646a3246b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  player: {fileID: 1037468082}
+  sideSmoothSpeed: 5
+  upSmoothSpeed: 15
+  yOffset: 2
 --- !u!1 &1351214918
 GameObject:
   m_ObjectHideFlags: 0
