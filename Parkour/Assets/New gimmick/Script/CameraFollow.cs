@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;// Adjust in Inspector
-    public float sideSmoothSpeed = 5f; // How fast it follows lane changes
-    public float upSmoothSpeed = 5f;   // How fast it follows jumps
-     public float yOffset = 2.5f; 
+    public Transform player;
+    public float sideSmoothSpeed = 5f; 
+    public float upSmoothSpeed = 5f;   
+    public float yOffset = 2.5f;
+    public float zOffset = 2.5f;
+
+
+    [Header("Shake Settings")]
+    public AnimationCurve shakeCurve; // Define a "sawtooth" or "vibration" curve here
+    public float shakeIntensity = 0.5f;
+    public float shakeDuration = 0.3f;
+    private float shakeTimer = 0;
 
     void LateUpdate()
     {
@@ -15,15 +23,29 @@ public class CameraFollow : MonoBehaviour
         float targetX = player.position.x;
         float newX = Mathf.Lerp(transform.position.x, targetX, sideSmoothSpeed * Time.deltaTime);
 
-        // 2. Smooth Vertical (Y) + Manual Offset
-        // We add yOffset to the player's current height
+        // 2. Smooth Vertical (Y)
         float targetY = player.position.y + yOffset;
         float newY = Mathf.Lerp(transform.position.y, targetY, upSmoothSpeed * Time.deltaTime);
 
-        // 3. Locked Forward (Z)
-        // No Lerp here: the camera stays exactly 'zDistance' behind the player
+        // 3. Shake Logic
+        Vector3 shakeOffset = Vector3.zero;
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+            // Use curve to determine magnitude over time
+            float curveValue = shakeCurve.Evaluate(1f - (shakeTimer / shakeDuration));
+            // Random shake multiplied by curve magnitude
+            shakeOffset = Random.insideUnitSphere * curveValue * shakeIntensity;
+        }
 
-        // Apply the final position
-        transform.position = new Vector3(newX, newY, transform.position.z);
+      
+
+        // Apply position + shake
+        transform.position = new Vector3(newX, newY, player.position.z - zOffset) + shakeOffset;
+    }
+
+    public void RequestShake()
+    {
+        shakeTimer = shakeDuration;
     }
 }

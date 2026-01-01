@@ -2,15 +2,14 @@
 
 public class InputStateMachine : MonoBehaviour
 {
-    public enum RunnerState { UP, DOWN, RUNNING }
-    public enum phase {enter, stay, exit}
-
+     
+    public enum RunnerState { UP, DOWN, RUNNING };
     public RunnerState currentState = RunnerState.RUNNING;
-    public bool haltElapsedOneFrame;
+    
 
     private CharacterController playerCC;
     private Animator playerAnim;
-    private AnimatorStateInfo state;
+    public AnimatorStateInfo state;
     private float microVib = 0.001f;
     private float duration;
 
@@ -18,10 +17,10 @@ public class InputStateMachine : MonoBehaviour
     public float elapsed;
     private float _lockTimer; // The "Solution 1" Lock
     
-    public enum Lane { left, middle, right }
+    
+    public enum Lane { left, middle, right };
     public Lane currentLane = Lane.middle;
     private Lane previousLane = Lane.middle;
-    public phase currentPhase;
 
     [Header("Jump Settings")]
     public int jumpCount = 0;
@@ -37,10 +36,13 @@ public class InputStateMachine : MonoBehaviour
     public AnimationCurve goLeftCurve;
     public AnimationCurve goRightCurve;
 
+    private CameraFollow camFollow; 
+
     void Start()
     {
         playerCC = GetComponent<CharacterController>();
         playerAnim = GetComponent<Animator>();
+        camFollow = Camera.main.GetComponent<CameraFollow>(); // Find the camera
     }
 
     private void OnEnable() => SwipeManager.OnSwipe += HandleSwipe;
@@ -62,13 +64,14 @@ public class InputStateMachine : MonoBehaviour
             {
                 previousLane = currentLane; // Save current as previous
                 currentLane++;
-                playerAnim.SetTrigger("Right");
+                if(playerCC.isGrounded){playerAnim.SetTrigger("Right");}
+                
             }
             else if (direction.x < 0 && currentLane > Lane.left)
             {
                 previousLane = currentLane; // Save current as previous
                 currentLane--;
-                playerAnim.SetTrigger("Left");
+                if(playerCC.isGrounded){playerAnim.SetTrigger("Left");}
             }
         }
         else
@@ -126,6 +129,7 @@ public class InputStateMachine : MonoBehaviour
         if ((flags & CollisionFlags.Sides) != 0)
         {
             currentLane = previousLane;
+            if(camFollow != null) camFollow.RequestShake();
         }
     }
     
@@ -181,7 +185,7 @@ public class InputStateMachine : MonoBehaviour
             case RunnerState.UP:
                duration = 0.7f;
                float t = Mathf.Clamp01(elapsed / duration);
-                // Calculate delta and add it to the main move vector
+               // Calculate delta and add it to the main move vector
                float yDelta = jumpYCurve.Evaluate(t) - jumpYCurve.Evaluate(t - (Time.deltaTime / duration));
                move.y = yDelta;
             break;
@@ -192,7 +196,6 @@ public class InputStateMachine : MonoBehaviour
                 playerCC.center = new Vector3(0, 0.33f, 0.21f);
                 delta = Vector3.zero;
                 move.y = verticalVelocity;
-                
             break;
         }
 
