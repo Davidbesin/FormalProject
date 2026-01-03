@@ -10,7 +10,7 @@ public class InputStateMachine : MonoBehaviour
     private CharacterController playerCC;
     private Animator playerAnim;
     public AnimatorStateInfo state;
-    private float microVib = 0.001f;
+    private float microVib = 0.1f;
     private float duration;
 
     private float verticalVelocity;
@@ -71,7 +71,7 @@ public class InputStateMachine : MonoBehaviour
             {
                 previousLane = currentLane; // Save current as previous
                 currentLane--;
-                if(playerCC.isGrounded){playerAnim.SetTrigger("Left");}
+                if(playerCC.isGrounded && !state.IsName("RollStyle")){playerAnim.SetTrigger("Left");}
             }
         }
         else
@@ -85,9 +85,10 @@ public class InputStateMachine : MonoBehaviour
                     jumpCount++; 
                 
                     
-                    if (jumpCount > 1) 
+                     if (jumpCount > 1) 
                     {
-                        playerAnim.Play("jump", -1, 0f); // Force animation restart
+                        // Replaced SetTrigger with Play to force an immediate restart of the state
+                        playerAnim.Play("BIG JUMP", 0, 0f); 
                     }
                     else 
                     {
@@ -106,26 +107,24 @@ public class InputStateMachine : MonoBehaviour
     void Update()
     {
         state = playerAnim.GetCurrentAnimatorStateInfo(0);
-        
-        // Count down the lock
+
+        // CENTRALIZED JUMP RESET
+        // Reset jumpCount if on ground, but ignore the first 0.1s of a jump to prevent instant reset
+        if (playerCC.isGrounded && (currentState != RunnerState.UP || elapsed > 0.1f))
+        {
+            jumpCount = 0;
+        }
+
         if (_lockTimer > 0) _lockTimer -= Time.deltaTime;
 
-        // 3. Passive Reset (Only happens if NOT locked)
-        if (currentState != RunnerState.RUNNING && _lockTimer <= 0)
-        {
-            if (state.normalizedTime >= 1.0f && !playerAnim.IsInTransition(0))
-            {
-                currentState = RunnerState.RUNNING;
-            }
-        }
+        // Passive Reset
+       
         ApplyStatePhysics();
         ApplyLaneMovement();
 
-        playerCC.Move(move);
-        
+        // REMOVED: playerCC.Move(move); (You had this twice, removed the duplicate)
         CollisionFlags flags = playerCC.Move(move);
-        
-        // If we hit something on the sides while changing lanes, go back
+    
         if ((flags & CollisionFlags.Sides) != 0)
         {
             currentLane = previousLane;
@@ -157,16 +156,6 @@ public class InputStateMachine : MonoBehaviour
 
     private void ApplyStatePhysics()
     {
-        if (playerCC.isGrounded && currentState != RunnerState.UP)
-    {
-        jumpCount = 0;
-    }
-    
-    // Safety fallback: if we are grounded and the jump curve is mostly finished
-    if (playerCC.isGrounded && currentState == RunnerState.UP && elapsed > 0.1f)
-    {
-        jumpCount = 0;
-    }
 
         elapsed += Time.deltaTime;
       
@@ -175,6 +164,9 @@ public class InputStateMachine : MonoBehaviour
             case RunnerState.RUNNING:
                 if (playerCC.isGrounded) verticalVelocity = -0.5f;
                 else verticalVelocity += -9.81f * Time.deltaTime;
+                playerCC.height = 2f;
+                playerCC.radius = 0.32f;
+                playerCC.center = new Vector3(0, 0.78f, 0);
                 move.y = verticalVelocity * Time.deltaTime;
                 elapsed = 0;
                 microVib = -microVib;
@@ -183,8 +175,11 @@ public class InputStateMachine : MonoBehaviour
             break;
 
             case RunnerState.UP:
-               duration = 0.7f;
-               float t = Mathf.Clamp01(elapsed / duration);
+                playerCC.height = 2f;
+                playerCC.radius = 0.32f;
+                playerCC.center = new Vector3(0, 0.78f, 0);  
+                duration = 0.7f;
+                float t = Mathf.Clamp01(elapsed / duration);
                // Calculate delta and add it to the main move vector
                float yDelta = jumpYCurve.Evaluate(t) - jumpYCurve.Evaluate(t - (Time.deltaTime / duration));
                move.y = yDelta;

@@ -1,19 +1,11 @@
 fileFormatVersion: 2
-guid: 53186c660ca35254cb302f56f055063e
-AssetOrigin:
-  serializedVersion: 1
-  productId: 154271
-  packageName: Human Basic Motions FREE
-  packageVersion: 2.4.1
-  assetPath: Assets/Kevin Iglesias/Human Animations/Animations/Male/Movement/Jump/HumanM@Jump01
-    [RM] - Begin.fbx
-  uploadId: 825236
+guid: 213a35425327a9c428173f8320d07a39
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 0
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -23,14 +15,14 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: Rig/B-root
+    motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 0
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -39,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: HumanM@Jump01 [RM] - Begin
-      takeName: Untitled
-      internalID: 3094330708855449807
+      name: mixamo.com
+      takeName: mixamo.com
+      internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 18.8
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -55,135 +47,17 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: HumanF_BodyMesh
-        weight: 0
-      - path: Rig
-        weight: 1
-      - path: Rig/B-root
-        weight: 1
-      - path: Rig/B-root/B-hips
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-neck
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-neck/B-head
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-neck/B-head/B-jaw
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-handProp.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-indexFinger01.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-indexFinger01.L/B-indexFinger02.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-indexFinger01.L/B-indexFinger02.L/B-indexFinger03.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-middleFinger01.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-middleFinger01.L/B-middleFinger02.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-middleFinger01.L/B-middleFinger02.L/B-middleFinger03.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-pinky01.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-pinky01.L/B-pinky02.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-pinky01.L/B-pinky02.L/B-pinky03.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-ringFinger01.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-ringFinger01.L/B-ringFinger02.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-ringFinger01.L/B-ringFinger02.L/B-ringFinger03.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-thumb01.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-thumb01.L/B-thumb02.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.L/B-upperArm.L/B-forearm.L/B-hand.L/B-thumb01.L/B-thumb02.L/B-thumb03.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-handProp.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-indexFinger01.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-indexFinger01.R/B-indexFinger02.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-indexFinger01.R/B-indexFinger02.R/B-indexFinger03.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-middleFinger01.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-middleFinger01.R/B-middleFinger02.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-middleFinger01.R/B-middleFinger02.R/B-middleFinger03.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-pinky01.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-pinky01.R/B-pinky02.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-pinky01.R/B-pinky02.R/B-pinky03.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-ringFinger01.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-ringFinger01.R/B-ringFinger02.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-ringFinger01.R/B-ringFinger02.R/B-ringFinger03.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-thumb01.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-thumb01.R/B-thumb02.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-spine/B-chest/B-shoulder.R/B-upperArm.R/B-forearm.R/B-hand.R/B-thumb01.R/B-thumb02.R/B-thumb03.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.L/B-shin.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.L/B-shin.L/B-foot.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.L/B-shin.L/B-foot.L/B-toe.L
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.R/B-shin.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.R/B-shin.R/B-foot.R
-        weight: 1
-      - path: Rig/B-root/B-hips/B-thigh.R/B-shin.R/B-foot.R/B-toe.R
-        weight: 1
-      - path: Rig/B-root/B-spineProxy
-        weight: 1
-      maskType: 1
-      maskSource: {fileID: 31900000, guid: 89527f5525238ee44b3182458d85143a, type: 2}
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
@@ -206,7 +80,7 @@ ModelImporter:
     keepQuads: 0
     weldVertices: 1
     bakeAxisConversion: 0
-    preserveHierarchy: 1
+    preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
@@ -748,17 +622,20 @@ ModelImporter:
     - name: mixamorig:RightHandIndex1
       parentName: mixamorig:RightHand
       position: {x: -0.02259835, y: 0.091082826, z: 0.0051786215}
-      rotation: {x: 0.00000029653276, y: -0.000000059517056, z: 0.00000017676955, w: 1}
+      rotation: {x: 0.00000029653276, y: -0.000000059517056, z: 0.00000017676955,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandIndex2
       parentName: mixamorig:RightHandIndex1
       position: {x: 8.564062e-17, y: 0.037, z: -9.3649935e-17}
-      rotation: {x: -0.00000005960482, y: 0.000000044703484, z: 0.000000016681241, w: 1}
+      rotation: {x: -0.00000005960482, y: 0.000000044703484, z: 0.000000016681241,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandIndex3
       parentName: mixamorig:RightHandIndex2
       position: {x: 3.4287106e-15, y: 0.028499998, z: -8.893045e-12}
-      rotation: {x: -0.00000002980207, y: -0.000000044703484, z: -0.00000015755253, w: 1}
+      rotation: {x: -0.00000002980207, y: -0.000000044703484, z: -0.00000015755253,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandIndex4
       parentName: mixamorig:RightHandIndex3
@@ -768,17 +645,20 @@ ModelImporter:
     - name: mixamorig:RightHandMiddle1
       parentName: mixamorig:RightHand
       position: {x: 0.00000023687323, y: 0.09532501, z: 0.0000003985569}
-      rotation: {x: -0.000000016102785, y: -0.000000029908218, z: -0.000000065639, w: 1}
+      rotation: {x: -0.000000016102785, y: -0.000000029908218, z: -0.000000065639,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandMiddle2
       parentName: mixamorig:RightHandMiddle1
       position: {x: 1.0026188e-16, y: 0.037, z: -2.8084325e-16}
-      rotation: {x: -0.00000008940678, y: -0.000000014901168, z: 0.00000016338068, w: 1}
+      rotation: {x: -0.00000008940678, y: -0.000000014901168, z: 0.00000016338068,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandMiddle3
       parentName: mixamorig:RightHandMiddle2
       position: {x: 2.5163898e-15, y: 0.0295, z: -1.5411337e-10}
-      rotation: {x: -0.000000029802496, y: 0.000000014901515, z: -0.00000017121899, w: 1}
+      rotation: {x: -0.000000029802496, y: 0.000000014901515, z: -0.00000017121899,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandMiddle4
       parentName: mixamorig:RightHandMiddle3
@@ -793,7 +673,8 @@ ModelImporter:
     - name: mixamorig:RightHandRing2
       parentName: mixamorig:RightHandRing1
       position: {x: 5.1494657e-17, y: 0.03379273, z: -2.837085e-16}
-      rotation: {x: -0.000000029801885, y: -0.000000029801978, z: -0.000000052319, w: 1}
+      rotation: {x: -0.000000029801885, y: -0.000000029801978, z: -0.000000052319,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:RightHandRing3
       parentName: mixamorig:RightHandRing2
@@ -838,7 +719,8 @@ ModelImporter:
     - name: mixamorig:LeftForeArm
       parentName: mixamorig:LeftArm
       position: {x: -9.0380454e-17, y: 0.2784152, z: -4.3119334e-17}
-      rotation: {x: -0.000000059604634, y: 0.00000005960464, z: -0.000000059604634, w: 1}
+      rotation: {x: -0.000000059604634, y: 0.00000005960464, z: -0.000000059604634,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHand
       parentName: mixamorig:LeftForeArm
@@ -888,12 +770,14 @@ ModelImporter:
     - name: mixamorig:LeftHandMiddle1
       parentName: mixamorig:LeftHand
       position: {x: 0.0000003660436, y: 0.095334016, z: -0.00000032540473}
-      rotation: {x: 0.00000046807824, y: -0.000000029776528, z: 0.00000023048098, w: 1}
+      rotation: {x: 0.00000046807824, y: -0.000000029776528, z: 0.00000023048098,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHandMiddle2
       parentName: mixamorig:LeftHandMiddle1
       position: {x: 1.8484327e-17, y: 0.037, z: -4.1078256e-17}
-      rotation: {x: -0.00000022318848, y: 0.000000044710372, z: -0.00000025219094, w: 1}
+      rotation: {x: -0.00000022318848, y: 0.000000044710372, z: -0.00000025219094,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHandMiddle3
       parentName: mixamorig:LeftHandMiddle2
@@ -908,7 +792,8 @@ ModelImporter:
     - name: mixamorig:LeftHandRing1
       parentName: mixamorig:LeftHand
       position: {x: -0.018650811, y: 0.09104528, z: 0.00043028235}
-      rotation: {x: -0.00000021796272, y: -0.000000059601565, z: -0.00000020462471, w: 1}
+      rotation: {x: -0.00000021796272, y: -0.000000059601565, z: -0.00000020462471,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHandRing2
       parentName: mixamorig:LeftHandRing1
@@ -918,7 +803,8 @@ ModelImporter:
     - name: mixamorig:LeftHandRing3
       parentName: mixamorig:LeftHandRing2
       position: {x: -0.000000026432891, y: 0.0295, z: 0.0000000052098597}
-      rotation: {x: 0.000000029802365, y: -0.000000089406974, z: 0.00000011920925, w: 1}
+      rotation: {x: 0.000000029802365, y: -0.000000089406974, z: 0.00000011920925,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHandRing4
       parentName: mixamorig:LeftHandRing3
@@ -933,12 +819,14 @@ ModelImporter:
     - name: mixamorig:LeftHandPinky2
       parentName: mixamorig:LeftHandPinky1
       position: {x: 3.8940705e-17, y: 0.036, z: 2.5409893e-16}
-      rotation: {x: -0.00000012490868, y: 0.000000014798431, z: 0.00000022861724, w: 1}
+      rotation: {x: -0.00000012490868, y: 0.000000014798431, z: 0.00000022861724,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHandPinky3
       parentName: mixamorig:LeftHandPinky2
       position: {x: -2.4071785e-15, y: 0.021000002, z: 3.3381643e-16}
-      rotation: {x: 0.00000019501242, y: -0.000000029788245, z: 0.00000012535493, w: 1}
+      rotation: {x: 0.00000019501242, y: -0.000000029788245, z: 0.00000012535493,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamorig:LeftHandPinky4
       parentName: mixamorig:LeftHandPinky3
@@ -1007,7 +895,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 11e8a6cabff290e45893a4e53da2fed2, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 11e8a6cabff290e45893a4e53da2fed2,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
