@@ -10,7 +10,6 @@ public class InputStateMachine : MonoBehaviour
     private CharacterController playerCC;
     private Animator playerAnim;
     public AnimatorStateInfo state;
-    private float microVib = 0.1f;
     private float duration;
 
     private float verticalVelocity;
@@ -99,6 +98,7 @@ public class InputStateMachine : MonoBehaviour
             else
             {
                 currentState = RunnerState.DOWN;
+                elapsed = 0;
                 playerAnim.SetTrigger("roll");
             }
         }
@@ -121,17 +121,32 @@ public class InputStateMachine : MonoBehaviour
        
         ApplyStatePhysics();
         ApplyLaneMovement();
-
-        // REMOVED: playerCC.Move(move); (You had this twice, removed the duplicate)
+       
+        move.z = 0.01f * Time.deltaTime;
+        
         CollisionFlags flags = playerCC.Move(move);
+    }
+
+  /*  void LateUpdate()
+    {
+        if (currentState == RunnerState.DOWN || currentState == RunnerState.UP)
+        {
+            if (!state.IsName("Jump") && !state.IsName("RollStyle"))
+            {
+                currentState = RunnerState.RUNNING;
+            }
+        }
+    } */
     
-        if ((flags & CollisionFlags.Sides) != 0)
+    void OnControllerColliderHit (ControllerColliderHit hit)
+    {
+        float sideDot = Vector3.Dot(hit.normal, transform.right);
+        if (Mathf.Abs(sideDot) > 0.7f)
         {
             currentLane = previousLane;
             if(camFollow != null) camFollow.RequestShake();
         }
     }
-    
     
     //------------laneMovement
     void ApplyLaneMovement()
@@ -144,7 +159,6 @@ public class InputStateMachine : MonoBehaviour
             ref laneVelocity,
             laneSmoothTime
         );
-
         move.x = newX - transform.position.x;
     }
 
@@ -158,7 +172,8 @@ public class InputStateMachine : MonoBehaviour
     {
 
         elapsed += Time.deltaTime;
-      
+        
+
         switch (currentState)
         {
             case RunnerState.RUNNING:
@@ -169,9 +184,6 @@ public class InputStateMachine : MonoBehaviour
                 playerCC.center = new Vector3(0, 0.78f, 0);
                 move.y = verticalVelocity * Time.deltaTime;
                 elapsed = 0;
-                microVib = -microVib;
-                move.x = microVib;
-                move.z = microVib;
             break;
 
             case RunnerState.UP:
@@ -183,6 +195,13 @@ public class InputStateMachine : MonoBehaviour
                // Calculate delta and add it to the main move vector
                float yDelta = jumpYCurve.Evaluate(t) - jumpYCurve.Evaluate(t - (Time.deltaTime / duration));
                move.y = yDelta;
+                 if (t >= 1f) 
+                {
+                    currentState = RunnerState.RUNNING;
+                    elapsed = 0;
+                }
+                   
+               
             break;
 
             case RunnerState.DOWN:
@@ -191,9 +210,13 @@ public class InputStateMachine : MonoBehaviour
                 playerCC.center = new Vector3(0, 0.33f, 0.21f);
                 delta = Vector3.zero;
                 move.y = verticalVelocity;
+                if (elapsed >= duration)
+                {
+                    currentState = RunnerState.RUNNING;
+                    elapsed = 0;
+                }
             break;
         }
-
     }
 }
     
