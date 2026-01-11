@@ -17,7 +17,6 @@ Material:
   - ANIME_SOFT
   - DIFFUSE
   - EMISSIVE_MAP
-  - FOG
   - MATCAP_PERSPECTIVE
   - NORMAL_MAP
   - OUTLINE
@@ -180,7 +179,7 @@ Material:
     - _DiffuseWrap: 0
     - _DoubleSided: 1
     - _Flat: 0
-    - _Fog: 1
+    - _Fog: 0
     - _GiEqualization: 0.9
     - _HeightColors: 0
     - _HeightColorsAlpha: 1
@@ -316,7 +315,7 @@ Material:
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapRot: {r: 0, g: 0, b: 0, a: 0}
     - _MatcapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0.2679245, g: 0.17743677, b: 0.2572978, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimDirection: {r: 0, g: 0, b: 0, a: 0}

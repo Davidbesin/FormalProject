@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class InputStateMachine : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class InputStateMachine : MonoBehaviour
     public Lane currentLane = Lane.middle;
     private Lane previousLane = Lane.middle;
 
+    public float forward;
+
     [Header("Jump Settings")]
     public int jumpCount = 0;
     public int maxJumps = 2; // Set to 2 for Double Jump
@@ -37,6 +40,9 @@ public class InputStateMachine : MonoBehaviour
 
     private CameraFollow camFollow; 
 
+    //
+    public static event Action OnRunning;
+
     void Start()
     {
         playerCC = GetComponent<CharacterController>();
@@ -44,8 +50,8 @@ public class InputStateMachine : MonoBehaviour
         camFollow = Camera.main.GetComponent<CameraFollow>(); // Find the camera
     }
 
-    private void OnEnable() => SwipeManager.OnSwipe += HandleSwipe;
-    private void OnDisable() => SwipeManager.OnSwipe -= HandleSwipe;
+    private void OnEnable() {SwipeManager.OnSwipe += HandleSwipe; OnRunning += RunCollider;}
+    private void OnDisable() {SwipeManager.OnSwipe -= HandleSwipe; OnRunning -= RunCollider;}
 
     private void HandleSwipe(Vector2 direction)
     {
@@ -82,9 +88,8 @@ public class InputStateMachine : MonoBehaviour
                     currentState = RunnerState.UP;
                     elapsed = 0; // Reset curve progress for the new jump
                     jumpCount++; 
-                
-                    
-                     if (jumpCount > 1) 
+                                    
+                    if (jumpCount > 1) 
                     {
                         // Replaced SetTrigger with Play to force an immediate restart of the state
                         playerAnim.Play("BIG JUMP", 0, 0f); 
@@ -93,6 +98,11 @@ public class InputStateMachine : MonoBehaviour
                     {
                         playerAnim.SetTrigger("jump");
                     }
+                    
+                    playerCC.height = 1.4f;
+                    playerCC.radius = 0.32f;
+                    playerCC.center = new Vector3(0, 1.03f, 0);  
+
                 }
             }
             else
@@ -100,6 +110,9 @@ public class InputStateMachine : MonoBehaviour
                 currentState = RunnerState.DOWN;
                 elapsed = 0;
                 playerAnim.SetTrigger("roll");
+                playerCC.height = 0.81f;
+                playerCC.radius = 0.47f;
+                playerCC.center = new Vector3(0, 0.33f, 0.21f);
             }
         }
     }
@@ -122,12 +135,12 @@ public class InputStateMachine : MonoBehaviour
         ApplyStatePhysics();
         ApplyLaneMovement();
        
-        move.z = 0.01f * Time.deltaTime;
+        move.z = forward * Time.deltaTime;
         
         CollisionFlags flags = playerCC.Move(move);
     }
 
-  /*  void LateUpdate()
+/*  void LateUpdate()
     {
         if (currentState == RunnerState.DOWN || currentState == RunnerState.UP)
         {
@@ -137,14 +150,22 @@ public class InputStateMachine : MonoBehaviour
             }
         }
     } */
-    
+    public static event Action death;
     void OnControllerColliderHit (ControllerColliderHit hit)
     {
         float sideDot = Vector3.Dot(hit.normal, transform.right);
+        float dotProduct = Vector3.Dot(hit.normal, transform.forward);
         if (Mathf.Abs(sideDot) > 0.7f)
         {
             currentLane = previousLane;
             if(camFollow != null) camFollow.RequestShake();
+        }
+
+         if (dotProduct < -0.9f)
+        {
+            // The hit was head-on!
+            death?.Invoke();
+            
         }
     }
     
@@ -179,37 +200,27 @@ public class InputStateMachine : MonoBehaviour
             case RunnerState.RUNNING:
                 if (playerCC.isGrounded) verticalVelocity = -0.5f;
                 else verticalVelocity += -9.81f * Time.deltaTime;
-                playerCC.height = 2f;
-                playerCC.radius = 0.32f;
-                playerCC.center = new Vector3(0, 0.78f, 0);
-                move.y = verticalVelocity * Time.deltaTime;
-                elapsed = 0;
+                OnRunning?.Invoke();
             break;
 
             case RunnerState.UP:
-                playerCC.height = 2f;
-                playerCC.radius = 0.32f;
-                playerCC.center = new Vector3(0, 0.78f, 0);  
                 duration = 0.7f;
                 float t = Mathf.Clamp01(elapsed / duration);
-               // Calculate delta and add it to the main move vector
-               float yDelta = jumpYCurve.Evaluate(t) - jumpYCurve.Evaluate(t - (Time.deltaTime / duration));
-               move.y = yDelta;
-                 if (t >= 1f) 
+                // Calculate delta and add it to the main move vector
+                float yDelta = jumpYCurve.Evaluate(t) - jumpYCurve.Evaluate(t - (Time.deltaTime / duration));
+                move.y = yDelta;
+                if (t >= 1f) 
                 {
-                    currentState = RunnerState.RUNNING;
-                    elapsed = 0;
+                     currentState = RunnerState.RUNNING;
+                     elapsed = 0;
                 }
-                   
-               
             break;
 
             case RunnerState.DOWN:
-                playerCC.height = 0.81f;
-                playerCC.radius = 0.47f;
-                playerCC.center = new Vector3(0, 0.33f, 0.21f);
+                
                 delta = Vector3.zero;
-                move.y = verticalVelocity;
+                move.y = verticalVelocity * 9f * Time.deltaTime ;
+                duration = 1.6f;
                 if (elapsed >= duration)
                 {
                     currentState = RunnerState.RUNNING;
@@ -217,6 +228,15 @@ public class InputStateMachine : MonoBehaviour
                 }
             break;
         }
+    }
+    //Event Suscriber for run
+    void RunCollider ()
+    {
+          playerCC.height = 2f;
+          playerCC.radius = 0.32f;
+          playerCC.center = new Vector3(0, 0.78f, 0); 
+          move.y = verticalVelocity * Time.deltaTime;
+          elapsed = 0;
     }
 }
     

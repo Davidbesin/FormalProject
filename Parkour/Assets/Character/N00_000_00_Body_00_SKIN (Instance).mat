@@ -229,7 +229,7 @@ Material:
     - _OutlineGroup: 0
     - _OutlineLightingMix: 0
     - _OutlinePass: 0
-    - _OutlineWidth: 0.0175
+    - _OutlineWidth: 0.01
     - _OutlineWidthIndependent: 0
     - _OutlineWidthMode: 0
     - _OutlineZPos: 0
@@ -247,7 +247,7 @@ Material:
     - _ReflectionSpecular: 0
     - _RenderQueueOffset: 0
     - _Rim: 0
-    - _RimAmount: 1
+    - _RimAmount: 0
     - _RimBlend: 1
     - _RimContrast: 5
     - _RimFresnelPower: 100
@@ -316,9 +316,9 @@ Material:
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapRot: {r: 0, g: 0, b: 0, a: 0}
     - _MatcapColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0.1288456, g: 0.12116054, b: 0.3433962, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 0.24999997, g: 0.24999997, b: 0.24999997, a: 1}
+    - _RimColor: {r: 0.23773581, g: 0.21232857, b: 0.17359199, a: 1}
     - _RimDirection: {r: 0, g: 0, b: 0, a: 0}
     - _ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
