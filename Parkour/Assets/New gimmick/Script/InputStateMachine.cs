@@ -150,7 +150,7 @@ public class InputStateMachine : MonoBehaviour
             }
         }
     } */
-    public static event Action death;
+    public static event Action trigger;
     void OnControllerColliderHit (ControllerColliderHit hit)
     {
         float sideDot = Vector3.Dot(hit.normal, transform.right);
@@ -164,7 +164,7 @@ public class InputStateMachine : MonoBehaviour
          if (dotProduct < -0.9f)
         {
             // The hit was head-on!
-            death?.Invoke();
+            trigger?.Invoke();
             
         }
     }

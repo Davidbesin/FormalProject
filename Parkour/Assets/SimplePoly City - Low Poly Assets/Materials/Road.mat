@@ -117,7 +117,7 @@ Material:
     - _AnimeThreshold1: 0.27
     - _AnimeThreshold2: 0.19
     - _BlendOp: 0
-    - _Brightness: 1
+    - _Brightness: 7
     - _CameraFadeEnd: 0
     - _CameraFadeInvert: 0
     - _CameraFadeStart: 0
@@ -194,7 +194,7 @@ Material:
     - _ReflectionRim: 0
     - _ReflectionSpecular: 0
     - _Rim: 1
-    - _RimAmount: 1
+    - _RimAmount: 1.5
     - _RimBlend: 1
     - _RimContrast: 5
     - _RimInverse: 0
@@ -241,7 +241,7 @@ Material:
     - _AnimeColor1: {r: 0.27102172, g: 0.2861846, b: 0.4339623, a: 1}
     - _AnimeColor2: {r: 0.67333287, g: 0.5221506, b: 0.5221506, a: 1}
     - _AnimeColor3: {r: 2, g: 2, b: 2, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.50377357, g: 0.9263662, b: 1, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _Emissive: {r: 0, g: 0, b: 0, a: 0}
     - _HeightColorsColor: {r: 0.335849, g: 0.30709425, b: 0.25790668, a: 1}

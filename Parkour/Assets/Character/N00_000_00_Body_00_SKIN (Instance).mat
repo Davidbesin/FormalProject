@@ -12,12 +12,11 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - AMBIENT
   - ANIME
   - ANIME_SOFT
   - BASE_SATURATION
-  - DIFFUSE
   - EMISSIVE_MAP
-  - FOG
   - MATCAP_PERSPECTIVE
   - NORMAL_MAP
   - OUTLINE
@@ -150,11 +149,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaMode: 1
-    - _AmbientBrightness: 0
+    - _AmbientBrightness: 4
     - _Anime: 1
     - _AnimeSoftness: 0.023
-    - _AnimeThreshold1: 0.45
-    - _AnimeThreshold2: 0
+    - _AnimeThreshold1: 0.42
+    - _AnimeThreshold2: 0.28
     - _BlendOp: 0
     - _Brightness: 3
     - _BumpScale: 1
@@ -173,14 +172,14 @@ Material:
     - _DetailLighting: 0
     - _DetailUV: 0
     - _DetailVertexColors: 0
-    - _Diffuse: 1
+    - _Diffuse: 0
     - _DiffuseBrightness: 1
     - _DiffuseContrast: 1
     - _DiffusePerPixel: 0
-    - _DiffuseWrap: 0
+    - _DiffuseWrap: -0.3
     - _DoubleSided: 1
     - _Flat: 0
-    - _Fog: 1
+    - _Fog: 0
     - _GiEqualization: 0.9
     - _HeightColors: 0
     - _HeightColorsAlpha: 1
@@ -229,7 +228,7 @@ Material:
     - _OutlineGroup: 0
     - _OutlineLightingMix: 0
     - _OutlinePass: 0
-    - _OutlineWidth: 0.01
+    - _OutlineWidth: 0.03
     - _OutlineWidthIndependent: 0
     - _OutlineWidthMode: 0
     - _OutlineZPos: 0
@@ -266,7 +265,7 @@ Material:
     - _ShadowsEnabled: 1
     - _SourceBlend: 1
     - _Specular: 0
-    - _SpecularBrightness: 1
+    - _SpecularBrightness: 4.7
     - _SpecularHair: 0
     - _SpecularSmoothness: 20
     - _SpecularUV: 0

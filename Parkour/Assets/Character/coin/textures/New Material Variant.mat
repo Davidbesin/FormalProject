@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Material Variant
+  m_Shader: {fileID: 4800000, guid: a2a06e22c08354d9699356710b69ca9c, type: 3}
+  m_Parent: {fileID: 2100000, guid: 01e370a32d9ee4744aa512d57fbeaf2f, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - AMBIENT
+  - ANIME
+  - ANIME_SOFT
+  - DIFFUSE
+  - FOG
+  - MATCAP_PERSPECTIVE
+  - OUTLINE
+  - SHADOWS_ENABLED
+  - _DETAILBLEND_MULTIPLY
+  - _DETAILUV_UV1
+  - _HEIGHTCOLORSBLEND_ALPHA_BLEND
+  - _LAYER1BLEND_ALPHA_BLEND
+  - _LAYER1UV_UV1
+  - _LAYER2BLEND_ALPHA_BLEND
+  - _LAYER2UV_UV1
+  - _LAYER3BLEND_ALPHA_BLEND
+  - _LAYER3UV_UV1
+  - _LIGHTMAPUV_UV1
+  - _MATCAPBLEND_MULTIPLY
+  - _NORMALUV2_UV1
+  - _NORMALUV_UV1
+  - _PLANTTYPE_PLANT
+  - _RIMBLEND_ADDITIVE
+  - _SHADOWOVERLAYANIMATION_SCROLL
+  - _SPECULARUV_UV1
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 0.7278625, b: 0.5176471, a: 1}
+    - _Emissive: {r: 44.842327, g: 11.083669, b: 11.083669, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

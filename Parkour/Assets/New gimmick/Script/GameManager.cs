@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
    private MoveSlowly mS;
    
    public GameObject start;
-    private void OnEnable() {InputStateMachine.death += Stopping;}
-    private void OnDisable() {InputStateMachine.death -= Stopping;}
+    private void OnEnable() {FogDensityChanger.death += Stopping;}
+    private void OnDisable() {FogDensityChanger.death -= Stopping;}
 
    // UI AFTER STOP
    public GameObject stopUI;
